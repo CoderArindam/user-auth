@@ -1,33 +1,31 @@
 import jwt from "jsonwebtoken";
 import UserRefreshTokenModel from "../models/UserRefreshToken.js";
-
-const verifyRefreshToken = async (oldRefreshToken) => {
+const verifyRefreshToken = async (refreshToken) => {
   try {
     const privateKey = process.env.JWT_REFRESH_TOKEN_SECRET_KEY;
-    // console.log("oldRefreshToken", oldRefreshToken);
 
-    //find the refresh token in database
+    // Find the refresh token from the database
     const userRefreshToken = await UserRefreshTokenModel.findOne({
-      token: oldRefreshToken,
+      token: refreshToken,
     });
-    console.log("userRefreshToken:", userRefreshToken);
+
+    // If refresh token not found, reject with an error
     if (!userRefreshToken) {
-      throw { error: true, message: "invalid refresh token" };
+      throw { error: true, message: "Invalid refresh token" };
     }
 
-    //verify the refresh token
+    // Verify the refresh token
+    const tokenDetails = jwt.verify(refreshToken, privateKey);
 
-    const tokenDetails = jwt.verify(oldRefreshToken, privateKey);
-    console.log("JWT Verified", tokenDetails);
-
-    //upon successfull verification, return token details
+    // If verification successful, return token details
     return {
       tokenDetails,
       error: false,
-      message: "valid refresh token",
+      message: "Valid refresh token",
     };
-  } catch (e) {
-    throw { error: true, message: "invalid refresh token" };
+  } catch (error) {
+    // If any error occurs during verification or token not found, reject with an error
+    throw { error: true, message: "Invalid refresh token" };
   }
 };
 

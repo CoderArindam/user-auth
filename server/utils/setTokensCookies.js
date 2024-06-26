@@ -2,31 +2,36 @@ const setTokensCookies = (
   res,
   accessToken,
   refreshToken,
-  accessTokenExp,
-  refreshTokenExp
+  newAccessTokenExp,
+  newRefreshTokenExp
 ) => {
   const accessTokenMaxAge =
-    (accessTokenExp - Math.floor(Date.now() / 1000)) * 1000;
-  console.log("newAccessTokenExp:", accessTokenExp);
+    (newAccessTokenExp - Math.floor(Date.now() / 1000)) * 1000;
+  const refreshTokenmaxAge =
+    (newRefreshTokenExp - Math.floor(Date.now() / 1000)) * 1000;
 
-  const refreshTokenMaxAge =
-    (refreshTokenExp - Math.floor(Date.now() / 1000)) * 1000;
-  console.log("max age:", refreshTokenExp);
-
-  //set cookie for access token
-
+  // Set Cookie for Access Token
   res.cookie("accessToken", accessToken, {
     httpOnly: true,
-    secure: false, //set secure true if using https
+    secure: false, // Set to true if using HTTPS
     maxAge: accessTokenMaxAge,
-    sameSite: "strict", //we can adjust according to our requirement
+    // sameSite: 'strict', // Adjust according to your requirements
   });
-  //set cookie for refresh token
+
+  // Set Cookie for Refresh Token
   res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
-    secure: false, //set secure true if using https
-    maxAge: refreshTokenMaxAge,
-    sameSite: "strict", //we can adjust according to our requirement
+    secure: false, // Set to true if using HTTPS
+    maxAge: refreshTokenmaxAge,
+    // sameSite: 'strict', // Adjust according to your requirements
+  });
+
+  // Set Cookie for is_auth
+  res.cookie("is_auth", true, {
+    httpOnly: false,
+    secure: false, // Set to true if using HTTPS
+    maxAge: refreshTokenmaxAge,
+    // sameSite: 'strict', // Adjust according to your requirements
   });
 };
 

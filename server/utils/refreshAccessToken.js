@@ -4,49 +4,49 @@ import generateTokens from "./generateTokens.js";
 import verifyRefreshToken from "./verifyRefreshToken.js";
 
 const refreshAccessToken = async (req, res) => {
-  //   console.log("request", req.cookies);
   try {
     const oldRefreshToken = req.cookies.refreshToken;
-    console.log("oldRefreshToken", oldRefreshToken);
-    //verify refresh token
+    // Verify Refresh Token is valid or not
     const { tokenDetails, error } = await verifyRefreshToken(oldRefreshToken);
-    console.log("token detals:", tokenDetails);
 
-    //find the user based on refresh token detail id
+    if (error) {
+      return res
+        .status(401)
+        .send({ status: "failed", message: "Invalid refresh token" });
+    }
+    // Find User based on Refresh Token detail id
     const user = await UserModel.findById(tokenDetails._id);
 
     if (!user) {
       return res
         .status(404)
-        .json({ status: "failed", message: "user not found" });
+        .send({ status: "failed", message: "User not found" });
     }
-    console.log("user", user);
-    //extract the user refresh token using the id from database
 
     const userRefreshToken = await UserRefreshTokenModel.findOne({
       userId: tokenDetails._id,
     });
-    console.log("user refresh token:", userRefreshToken.token);
-    console.log("old refresh token:", oldRefreshToken);
+
     if (oldRefreshToken !== userRefreshToken.token) {
       return res
         .status(401)
-        .json({ status: "failed", message: "unauthorized access" });
+        .send({ status: "failed", message: "Unauthorized access" });
     }
 
+    // Generate new access and refresh tokens
     const { accessToken, refreshToken, accessTokenExp, refreshTokenExp } =
-      generateTokens(user);
+      await generateTokens(user);
     return {
       newAccessToken: accessToken,
       newRefreshToken: refreshToken,
       newAccessTokenExp: accessTokenExp,
       newRefreshTokenExp: refreshTokenExp,
     };
-  } catch (e) {
-    console.error(e);
-    return res
+  } catch (error) {
+    console.error(error);
+    res
       .status(500)
-      .send({ status: "failed", message: "internal server error!" });
+      .send({ status: "failed", message: "Internal server error" });
   }
 };
 

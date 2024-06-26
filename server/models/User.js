@@ -10,7 +10,6 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
   },
   password: { type: String, required: true, trim: true },
-  is_verified: { type: Boolean, default: false },
 });
 
 //Model

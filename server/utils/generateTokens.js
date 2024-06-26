@@ -1,35 +1,29 @@
 import jwt from "jsonwebtoken";
 import UserRefreshTokenModel from "../models/UserRefreshToken.js";
-
 const generateTokens = async (user) => {
-  console.log("generate token file user:", user._id);
   try {
-    const payload = { _id: user._id };
+    const payload = { _id: user._id, roles: user.roles };
 
-    //generate access token with expiration time
-    const accessTokenExp = Math.floor(Date.now() / 1000) + 500; //token will expire in 120 seconds
+    // Generate access token with expiration time
+    const accessTokenExp = Math.floor(Date.now() / 1000) + 120; // Set expiration to 120 seconds from now
 
     const accessToken = jwt.sign(
       { ...payload, exp: accessTokenExp },
       process.env.JWT_ACCESS_TOKEN_SECRET_KEY
     );
-    console.log("access token:", accessToken);
-    //generate refresh token with expiration time
 
-    const refreshTokenExp = Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 5; //refresh token will expire in 5 days.
-
+    // Generate refresh token with expiration time
+    const refreshTokenExp = Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 5; // Set expiration to 5 days from now
     const refreshToken = jwt.sign(
-      {
-        ...payload,
-        exp: refreshTokenExp,
-      },
+      { ...payload, exp: refreshTokenExp },
       process.env.JWT_REFRESH_TOKEN_SECRET_KEY
     );
+
     const userRefreshToken = await UserRefreshTokenModel.findOneAndDelete({
       userId: user._id,
     });
 
-    //save new refresh token in database
+    // Save New Refresh Token
     await new UserRefreshTokenModel({
       userId: user._id,
       token: refreshToken,
@@ -41,8 +35,8 @@ const generateTokens = async (user) => {
       accessTokenExp,
       refreshTokenExp,
     });
-  } catch (e) {
-    return Promise.reject(e);
+  } catch (error) {
+    return Promise.reject(error);
   }
 };
 

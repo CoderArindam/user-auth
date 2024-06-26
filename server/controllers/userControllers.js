@@ -162,6 +162,28 @@ const getNewAccessToken = async (req, res) => {
     });
   }
 };
+const loggedUser = async (req, res) => {
+  res.json({ user: req.user });
+};
 
+const userLogout = async (req, res) => {
+  try {
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
+    res.clearCookie("is_auth");
+    res
+      .status(200)
+      .json({ status: "success", message: "logged out successfully!" });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ status: "failed", message: "unable to logout!" });
+  }
+};
 // Export the controllers
-export { userRegistration, userLogin, getNewAccessToken };
+export {
+  userRegistration,
+  userLogin,
+  getNewAccessToken,
+  loggedUser,
+  userLogout,
+};
