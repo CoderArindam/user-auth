@@ -136,7 +136,7 @@ const LoginComponent = () => {
             <p className="text-muted-400 mt-4 flex justify-between font-sans text-xs leading-5">
               <span>Don't have an account?</span>
               <a
-                href="/signup"
+                href="/"
                 className="text-primary-600 hover:text-primary-500 font-medium underline-offset-4 transition duration-150 ease-in-out hover:underline"
               >
                 Sign Up Now
