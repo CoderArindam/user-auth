@@ -95,7 +95,7 @@ const SignUpComponent = () => {
             account
           </p>
           <a
-            href="/auth/login-1"
+            href="/login"
             className="bg-white text-black py-4 px-8"
             disabled="false"
           >
