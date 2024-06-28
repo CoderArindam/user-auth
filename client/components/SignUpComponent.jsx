@@ -1,4 +1,5 @@
 "use client";
+
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
@@ -10,6 +11,7 @@ import {
   FaEye,
   FaCheck,
 } from "react-icons/fa";
+import { toast, Toaster } from "react-hot-toast";
 
 const SignUpComponent = () => {
   const [password, setPassword] = useState("");
@@ -17,6 +19,7 @@ const SignUpComponent = () => {
   const [passwordStrength, setPasswordStrength] = useState(0);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const evaluatePasswordStrength = (password) => {
@@ -52,6 +55,7 @@ const SignUpComponent = () => {
 
     if (!passwordsMatch()) {
       setError("Passwords do not match");
+      toast.error("Passwords do not match");
       return;
     }
 
@@ -61,6 +65,8 @@ const SignUpComponent = () => {
       password: password,
       password_confirmation: confirmPassword,
     };
+
+    setIsLoading(true);
 
     try {
       const response = await fetch("http://localhost:8000/api/user/register", {
@@ -73,18 +79,24 @@ const SignUpComponent = () => {
 
       if (response.ok) {
         setError(null);
+        toast.success("Account created successfully!");
         router.push("/login");
       } else {
         const result = await response.json();
         setError(result.message || "Something went wrong");
+        toast.error(result.message || "Something went wrong");
       }
     } catch (error) {
       setError("Failed to submit form");
+      toast.error("Failed to submit form");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="h-screen md:flex">
+      <Toaster position="top-right" reverseOrder={false} />
       <div className="bg-color-primary group relative hidden w-1/2 items-center justify-around overflow-hidden bg-primary md:flex">
         <div className="mx-auto max-w-xs text-center">
           <h2 className="nui-heading nui-heading-3xl nui-weight-medium nui-lead-normal text-white mb-4">
@@ -229,12 +241,14 @@ const SignUpComponent = () => {
             type="submit"
             className="nui-button nui-button-md nui-button-rounded-lg nui-button-solid nui-button-primary !h-11 w-full"
           >
-            Create Account
+            <span className="nui-button-text">
+              {isLoading ? "Creating account..." : "Create Account"}
+            </span>
           </button>
           <p className="text-muted-400 mt-4 flex justify-between text-sm">
             <span>Have an account?</span>
             <a
-              href="/auth/login-1"
+              href="/login"
               className="text-primary-600 hover:text-primary-500 font-medium underline-offset-4 transition duration-150 ease-in-out hover:underline focus:underline focus:outline-none"
             >
               Login here

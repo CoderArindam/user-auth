@@ -1,14 +1,15 @@
 "use client";
 
 import { IoIosArrowBack } from "react-icons/io";
-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast, Toaster } from "react-hot-toast";
 
 const LoginComponent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleChange = (e) => {
@@ -22,29 +23,37 @@ const LoginComponent = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const response = await fetch("http://localhost:8000/api/user/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({ email, password }),
       });
 
       if (response.ok) {
         setError(null);
+        toast.success("Login successful!");
         router.push("/dashboard");
       } else {
         const result = await response.json();
         setError(result.message || "Something went wrong");
+        toast.error(result.message || "Something went wrong");
       }
     } catch (error) {
       setError("Failed to submit form");
+      toast.error("Failed to submit form");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="dark:bg-muted-800 flex min-h-screen bg-white">
+      <Toaster position="top-right" reverseOrder={false} />
       <div className="relative flex flex-1 flex-col justify-center px-6 py-12 lg:w-2/5 lg:flex-none">
         <div className="dark:bg-muted-800 relative mx-auto w-full max-w-sm bg-white">
           <div className="flex w-full items-center justify-between">
@@ -61,14 +70,10 @@ const LoginComponent = () => {
               Welcome back.
             </h2>
             <p className="nui-paragraph nui-paragraph-sm nui-weight-normal nui-lead-normal text-muted-400 mb-6">
-              Login with social media or your credentials
+              Login with your credentials
             </p>
           </div>
-          {error && (
-            <div className="nui-alert nui-alert-error mb-4">
-              <span>{error}</span>
-            </div>
-          )}
+
           <form method="POST" action="" className="mt-6" noValidate="">
             <div className="mt-5">
               <div className="space-y-4">
@@ -128,7 +133,9 @@ const LoginComponent = () => {
                     onClick={handleLogin}
                     className="nui-button nui-button-primary nui-button-md nui-button-rounded w-full h-12"
                   >
-                    <span className="nui-button-text">Sign in</span>
+                    <span className="nui-button-text">
+                      {isLoading ? "Logging in..." : "Sign in"}
+                    </span>
                   </button>
                 </div>
               </div>
