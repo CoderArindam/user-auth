@@ -66,10 +66,10 @@ const LoginComponent = () => {
             </a>
           </div>
           <div>
-            <h2 className="dark:text-white nui-heading nui-heading-3xl nui-weight-medium nui-lead-relaxed mt-6 text-muted-700">
+            <h2 className="dark:text-white userauth-heading userauth-heading-3xl userauth-weight-medium userauth-lead-relaxed mt-6 text-muted-700">
               Welcome back.
             </h2>
-            <p className="nui-paragraph nui-paragraph-sm nui-weight-normal nui-lead-normal text-muted-400 mb-6">
+            <p className="userauth-paragraph userauth-paragraph-sm userauth-weight-normal userauth-lead-normal text-muted-400 mb-6">
               Login with your credentials
             </p>
           </div>
@@ -77,20 +77,20 @@ const LoginComponent = () => {
           <form method="POST" action="" className="mt-6" noValidate="">
             <div className="mt-5">
               <div className="space-y-4">
-                <div className="nui-input-wrapper nui-input-default nui-input-md nui-input-rounded">
+                <div className="userauth-input-wrapper userauth-input-default userauth-input-md userauth-input-rounded">
                   <label
                     htmlFor="ninja-input-21786"
-                    className="nui-input-label"
+                    className="userauth-input-label"
                   >
                     Email address
                   </label>
-                  <div className="nui-input-outer">
+                  <div className="userauth-input-outer">
                     <div>
                       <input
                         id="ninja-input-21786"
                         type="email"
                         autoComplete="email"
-                        className="nui-input h-12"
+                        className="userauth-input h-12"
                         placeholder="Email address"
                         name="email"
                         value={email}
@@ -100,20 +100,20 @@ const LoginComponent = () => {
                   </div>
                 </div>
 
-                <div className="nui-input-wrapper nui-input-default nui-input-md nui-input-rounded">
+                <div className="userauth-input-wrapper userauth-input-default userauth-input-md userauth-input-rounded">
                   <label
                     htmlFor="ninja-input-21787"
-                    className="nui-input-label"
+                    className="userauth-input-label"
                   >
                     Password
                   </label>
-                  <div className="nui-input-outer">
+                  <div className="userauth-input-outer">
                     <div>
                       <input
                         id="ninja-input-21787"
                         type="password"
                         autoComplete="current-password"
-                        className="nui-input h-12"
+                        className="userauth-input h-12"
                         placeholder="Password"
                         name="password"
                         value={password}
@@ -124,16 +124,16 @@ const LoginComponent = () => {
                 </div>
               </div>
               <div className="mt-6 flex items-center justify-between">
-                <div className="nui-checkbox nui-checkbox-rounded nui-checkbox-primary"></div>
+                <div className="userauth-checkbox userauth-checkbox-rounded userauth-checkbox-primary"></div>
               </div>
               <div className="mt-6">
                 <div className="block w-full rounded-md shadow-sm">
                   <button
                     type="submit"
                     onClick={handleLogin}
-                    className="nui-button nui-button-primary nui-button-md nui-button-rounded w-full h-12"
+                    className="userauth-button userauth-button-primary userauth-button-md userauth-button-rounded w-full h-12"
                   >
-                    <span className="nui-button-text">
+                    <span className="userauth-button-text">
                       {isLoading ? "Logging in..." : "Sign in"}
                     </span>
                   </button>

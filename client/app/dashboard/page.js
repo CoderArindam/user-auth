@@ -80,7 +80,7 @@ const DashboardPage = () => {
     <div className="dark:bg-muted-800 flex min-h-screen bg-white">
       <div className="relative flex flex-1 flex-col justify-center px-6 py-12 lg:w-2/5 lg:flex-none">
         <div className="dark:bg-muted-800 relative mx-auto w-full max-w-sm bg-white">
-          <h2 className="nui-heading nui-heading-3xl nui-weight-medium nui-lead-relaxed mt-6 text-muted-700">
+          <h2 className="userauth-heading userauth-heading-3xl userauth-weight-medium userauth-lead-relaxed mt-6 text-muted-700">
             Dashboard
           </h2>
           {profile && (
@@ -93,7 +93,7 @@ const DashboardPage = () => {
       </div>
       <button
         onClick={handleLogOut}
-        className="nui-button nui-button-primary nui-button-md nui-button-rounded w-full h-12"
+        className="userauth-button userauth-button-primary userauth-button-md userauth-button-rounded w-full h-12"
       >
         LogOut
       </button>

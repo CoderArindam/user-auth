@@ -99,10 +99,10 @@ const SignUpComponent = () => {
       <Toaster position="top-right" reverseOrder={false} />
       <div className="bg-color-primary group relative hidden w-1/2 items-center justify-around overflow-hidden bg-primary md:flex">
         <div className="mx-auto max-w-xs text-center">
-          <h2 className="nui-heading nui-heading-3xl nui-weight-medium nui-lead-normal text-white mb-4">
+          <h2 className="userauth-heading userauth-heading-3xl userauth-weight-medium userauth-lead-normal text-white mb-4">
             Have an Account?
           </h2>
-          <p className="nui-paragraph nui-paragraph-sm nui-weight-normal nui-lead-normal text-muted-200 mb-8">
+          <p className="userauth-paragraph userauth-paragraph-sm userauth-weight-normal userauth-lead-normal text-muted-200 mb-8">
             No need to waste time on this page, let's take you back to your
             account
           </p>
@@ -118,77 +118,77 @@ const SignUpComponent = () => {
       <div className="dark:bg-muted-900 flex flex-col items-center justify-between bg-white py-10 md:w-1/2">
         <div className="mx-auto flex w-full max-w-xs items-center justify-between">
           <div>
-            <label className="nui-theme-toggle" htmlFor="theme-toggle">
+            <label className="userauth-theme-toggle" htmlFor="theme-toggle">
               <input
                 type="checkbox"
-                className="nui-theme-toggle-input"
+                className="userauth-theme-toggle-input"
                 id="theme-toggle"
               />
-              <span className="nui-theme-toggle-inner">
-                <FaSun className="nui-sun" aria-hidden="true" />
-                <FaMoon className="nui-moon" aria-hidden="true" />
+              <span className="userauth-theme-toggle-inner">
+                <FaSun className="userauth-sun" aria-hidden="true" />
+                <FaMoon className="userauth-moon" aria-hidden="true" />
               </span>
             </label>
           </div>
         </div>
         <form className="mx-auto w-full max-w-xs" onSubmit={handleSubmit}>
-          <h2 className="nui-heading nui-heading-3xl nui-weight-medium nui-lead-normal">
+          <h2 className="userauth-heading userauth-heading-3xl userauth-weight-medium userauth-lead-normal">
             Welcome to Tairo
           </h2>
-          <p className="nui-paragraph nui-paragraph-sm nui-weight-normal nui-lead-normal text-muted-400 mb-6">
+          <p className="userauth-paragraph userauth-paragraph-sm userauth-weight-normal userauth-lead-normal text-muted-400 mb-6">
             Let's start by creating your account
           </p>
           {error && <p className="text-red-500">{error}</p>}
           <div className="mb-4 space-y-3">
-            <div className="nui-input-wrapper nui-input-default nui-input-md nui-input-rounded-lg nui-has-icon">
-              <div className="nui-input-outer">
+            <div className="userauth-input-wrapper userauth-input-default userauth-input-md userauth-input-rounded-lg userauth-has-icon">
+              <div className="userauth-input-outer">
                 <div>
                   <input
                     type="text"
                     name="name"
-                    className="nui-input"
+                    className="userauth-input"
                     placeholder="Please Enter Your Name"
                     required
                   />
-                  <div className="nui-input-icon">
+                  <div className="userauth-input-icon">
                     <FaUser />
                   </div>
                 </div>
               </div>
             </div>
-            <div className="nui-input-wrapper nui-input-default nui-input-md nui-input-rounded-lg nui-has-icon">
-              <div className="nui-input-outer">
+            <div className="userauth-input-wrapper userauth-input-default userauth-input-md userauth-input-rounded-lg userauth-has-icon">
+              <div className="userauth-input-outer">
                 <div>
                   <input
                     type="email"
                     name="email"
-                    className="nui-input"
+                    className="userauth-input"
                     placeholder="Email Address"
                     required
                   />
-                  <div className="nui-input-icon">
+                  <div className="userauth-input-icon">
                     <FaEnvelope />
                   </div>
                 </div>
               </div>
             </div>
             <div className="relative group/password-strength">
-              <div className="nui-input-wrapper nui-input-default nui-input-md nui-input-rounded-lg nui-has-icon">
-                <div className="nui-input-outer">
+              <div className="userauth-input-wrapper userauth-input-default userauth-input-md userauth-input-rounded-lg userauth-has-icon">
+                <div className="userauth-input-outer">
                   <div>
                     <input
                       type={showPassword ? "text" : "password"}
-                      className="nui-input !pe-12"
+                      className="userauth-input !pe-12"
                       placeholder="Password"
                       value={password}
                       onChange={handlePasswordChange}
                       required
                     />
-                    <div className="nui-input-icon">
+                    <div className="userauth-input-icon">
                       <FaLock />
                     </div>
                     <button
-                      className="leading-0 text-muted-400 peer-focus-within:text-primary-500 nui-focus absolute right-0 top-0 flex size-10 items-center justify-center text-center text-xl disabled:cursor-not-allowed"
+                      className="leading-0 text-muted-400 peer-focus-within:text-primary-500 userauth-focus absolute right-0 top-0 flex size-10 items-center justify-center text-center text-xl disabled:cursor-not-allowed"
                       type="button"
                       onClick={togglePasswordVisibility}
                     >
@@ -219,18 +219,18 @@ const SignUpComponent = () => {
                   ))}
               </div>
             </div>
-            <div className="nui-input-wrapper nui-input-default nui-input-md nui-input-rounded-lg nui-has-icon">
-              <div className="nui-input-outer">
+            <div className="userauth-input-wrapper userauth-input-default userauth-input-md userauth-input-rounded-lg userauth-has-icon">
+              <div className="userauth-input-outer">
                 <div>
                   <input
                     type="password"
-                    className="nui-input"
+                    className="userauth-input"
                     placeholder="Confirm password"
                     value={confirmPassword}
                     onChange={handleConfirmPasswordChange}
                     required
                   />
-                  <div className="nui-input-icon">
+                  <div className="userauth-input-icon">
                     <FaCheck />
                   </div>
                 </div>
@@ -239,9 +239,9 @@ const SignUpComponent = () => {
           </div>
           <button
             type="submit"
-            className="nui-button nui-button-md nui-button-rounded-lg nui-button-solid nui-button-primary !h-11 w-full"
+            className="userauth-button userauth-button-md userauth-button-rounded-lg userauth-button-solid userauth-button-primary !h-11 w-full"
           >
-            <span className="nui-button-text">
+            <span className="userauth-button-text">
               {isLoading ? "Creating account..." : "Create Account"}
             </span>
           </button>
@@ -256,7 +256,7 @@ const SignUpComponent = () => {
           </p>
         </form>
         <div className="text-center">
-          <span className="nui-text nui-content-sm nui-weight-normal nui-lead-normal text-muted-400">
+          <span className="userauth-text userauth-content-sm userauth-weight-normal userauth-lead-normal text-muted-400">
             © 2024 Arindam Mukherjee. All rights reserved.
           </span>
         </div>
