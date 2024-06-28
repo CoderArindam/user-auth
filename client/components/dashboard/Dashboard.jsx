@@ -23,6 +23,7 @@ const DashboardSection = () => {
         if (response.ok) {
           const data = await response.json();
           setProfile(data);
+          setIsLoading(false); // Set loading to false once data is fetched successfully
         } else {
           if (response.status === 401) {
             console.log("Unauthorized access");
@@ -30,36 +31,16 @@ const DashboardSection = () => {
           } else {
             setError("Failed to fetch user profile");
           }
+          setIsLoading(false); // Set loading to false on error
         }
       } catch (error) {
         setError("Failed to fetch user profile");
-      } finally {
-        setIsLoading(false);
+        setIsLoading(false); // Set loading to false on error
       }
     };
 
     fetchUserProfile();
   }, [router]);
-
-  if (isLoading) {
-    return (
-      <p className="text-center mt-20 text-lg text-gray-600">Loading...</p>
-    );
-  }
-
-  if (isUnauthorized) {
-    return (
-      <p className="text-center mt-20 text-lg text-red-600">
-        Unauthorized access, please log in to continue.
-      </p>
-    );
-  }
-
-  if (error) {
-    return (
-      <p className="text-center mt-20 text-lg text-red-600">Error: {error}</p>
-    );
-  }
 
   const handleLogOut = async () => {
     try {
@@ -83,6 +64,74 @@ const DashboardSection = () => {
       console.log("Unknown error occurred", error);
     }
   };
+
+  // Add token refresh logic here
+  useEffect(() => {
+    const checkTokenAndRefresh = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/api/user/profile", {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (response.status === 401) {
+          console.log(
+            "Access token expired or invalid. Attempting to refresh..."
+          );
+          // Make a refresh token request
+          const refreshResponse = await fetch(
+            "http://localhost:8000/api/user/refresh-token",
+            {
+              method: "POST",
+              credentials: "include",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          if (refreshResponse.ok) {
+            console.log("Token refreshed successfully.");
+            // Retry fetching user profile after token refresh
+            fetchUserProfile();
+          } else {
+            // Handle failed refresh, likely logout user or redirect to login
+            console.log("Failed to refresh token. Logging out...");
+            router.push("/login");
+          }
+        }
+      } catch (error) {
+        console.error("Error checking token:", error);
+      }
+    };
+
+    const interval = setInterval(checkTokenAndRefresh, 60000); // Check token every minute
+
+    return () => clearInterval(interval); // Clean up interval on component unmount
+  }, []);
+
+  if (isLoading) {
+    return (
+      <p className="text-center mt-20 text-lg text-gray-600">Loading...</p>
+    );
+  }
+
+  if (isUnauthorized) {
+    return (
+      <p className="text-center mt-20 text-lg text-red-600">
+        Unauthorized access, please log in to continue.
+      </p>
+    );
+  }
+
+  if (error) {
+    return (
+      <p className="text-center mt-20 text-lg text-red-600">Error: {error}</p>
+    );
+  }
 
   return (
     <div className="flex min-h-screen bg-white dark:bg-gray-900">
