@@ -52,10 +52,10 @@ const LoginComponent = () => {
   };
 
   return (
-    <div className="dark:bg-muted-800 flex min-h-screen bg-white">
-      <Toaster position="top-right" reverseOrder={false} />
+    <div className="bg-muted-800 flex min-h-screen bg-white">
+      <Toaster position="top-left" reverseOrder={false} />
       <div className="relative flex flex-1 flex-col justify-center px-6 py-12 lg:w-2/5 lg:flex-none">
-        <div className="dark:bg-muted-800 relative mx-auto w-full max-w-sm bg-white">
+        <div className="bg-muted-800 relative mx-auto w-full max-w-sm bg-white">
           <div className="flex w-full items-center justify-between">
             <a
               href="/"
@@ -66,74 +66,54 @@ const LoginComponent = () => {
             </a>
           </div>
           <div>
-            <h2 className="dark:text-white userauth-heading userauth-heading-3xl userauth-weight-medium userauth-lead-relaxed mt-6 text-muted-700">
-              Welcome back.
+            <h2 className="text-black text-3xl mt-6 mb-6 text-muted-700">
+              Welcome back!
             </h2>
-            <p className="userauth-paragraph userauth-paragraph-sm userauth-weight-normal userauth-lead-normal text-muted-400 mb-6">
-              Login with your credentials
-            </p>
+            <p className=" text-muted-400 mb-6">Login with your credentials</p>
           </div>
 
-          <form method="POST" action="" className="mt-6" noValidate="">
+          <form onSubmit={handleLogin}>
             <div className="mt-5">
               <div className="space-y-4">
                 <div className="userauth-input-wrapper userauth-input-default userauth-input-md userauth-input-rounded">
-                  <label
-                    htmlFor="ninja-input-21786"
-                    className="userauth-input-label"
-                  >
-                    Email address
-                  </label>
-                  <div className="userauth-input-outer">
-                    <div>
-                      <input
-                        id="ninja-input-21786"
-                        type="email"
-                        autoComplete="email"
-                        className="userauth-input h-12"
-                        placeholder="Email address"
-                        name="email"
-                        value={email}
-                        onChange={handleChange}
-                      />
-                    </div>
+                  <label className="userauth-input-label">Email address</label>
+
+                  <div>
+                    <input
+                      type="email"
+                      autoComplete="email"
+                      className="userauth-input h-12"
+                      placeholder="Email address"
+                      name="email"
+                      value={email}
+                      required
+                      onChange={handleChange}
+                    />
                   </div>
                 </div>
 
                 <div className="userauth-input-wrapper userauth-input-default userauth-input-md userauth-input-rounded">
-                  <label
-                    htmlFor="ninja-input-21787"
-                    className="userauth-input-label"
-                  >
-                    Password
-                  </label>
-                  <div className="userauth-input-outer">
-                    <div>
-                      <input
-                        id="ninja-input-21787"
-                        type="password"
-                        autoComplete="current-password"
-                        className="userauth-input h-12"
-                        placeholder="Password"
-                        name="password"
-                        value={password}
-                        onChange={handleChange}
-                      />
-                    </div>
+                  <label className="userauth-input-label">Password</label>
+
+                  <div>
+                    <input
+                      type="password"
+                      autoComplete="current-password"
+                      className="userauth-input h-12"
+                      placeholder="Password"
+                      name="password"
+                      value={password}
+                      required
+                      onChange={handleChange}
+                    />
                   </div>
                 </div>
               </div>
-              <div className="mt-6 flex items-center justify-between">
-                <div className="userauth-checkbox userauth-checkbox-rounded userauth-checkbox-primary"></div>
-              </div>
+              <div className="mt-6 flex items-center justify-between"></div>
               <div className="mt-6">
                 <div className="block w-full rounded-md shadow-sm">
-                  <button
-                    type="submit"
-                    onClick={handleLogin}
-                    className="userauth-button userauth-button-primary userauth-button-md userauth-button-rounded w-full h-12"
-                  >
-                    <span className="userauth-button-text">
+                  <button type="submit" className="userauth-button w-full h-12">
+                    <span className="text-white">
                       {isLoading ? "Logging in..." : "Sign in"}
                     </span>
                   </button>
@@ -152,11 +132,11 @@ const LoginComponent = () => {
           </form>
         </div>
       </div>
-      <div className="bg-muted-100 dark:bg-muted-900 relative hidden w-0 flex-1 items-center justify-center lg:flex lg:w-3/5">
+      <div className="bg-muted-100 bg-muted-900 relative hidden w-0 flex-1 items-center justify-center lg:flex lg:w-3/5">
         <div className="mx-auto w-full max-w-4xl">
           <img
             className="mx-auto max-w-md"
-            src="https://tairo.cssninja.io/img/illustrations/magician.svg"
+            src="https://i.ibb.co/sgNwQtf/magician.png"
             alt=""
             width={500}
             height={500}
